@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Represents a collection of files; how many it can hold is limited by its capacity.
@@ -103,4 +104,5 @@ public class Disk implements Comparable<Disk> {
             return -1;
         }
     }
+    
 }

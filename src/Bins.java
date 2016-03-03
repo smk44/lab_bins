@@ -1,10 +1,10 @@
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Scanner;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Runs a number of algorithms that try to fit files onto disks.
@@ -26,13 +26,18 @@ public class Bins {
         return results;
     }
 
+    private static void fitDisksAndPrint(Function<List<Integer>, List<Integer>> func, List<Integer> data ) {
+    	List<Integer> newList = func.apply(data);
+    	newList.forEach(System.out::println);
+    }
+    
     /**
      * The main program.
      */
     public static void main (String args[]) {
         Bins b = new Bins();
-        Scanner input = new Scanner(Bins.class.getClassLoader().getResourceAsStream(DATA_FILE));
-        List<Integer> data = b.readData(input);
+        Scanner in = new Scanner(Bins.class.getClassLoader().getResourceAsStream(DATA_FILE));
+        List<Integer> data = b.readData(in);
 
         PriorityQueue<Disk> pq = new PriorityQueue<Disk>();
         pq.add(new Disk(0));
@@ -63,7 +68,7 @@ public class Bins {
         }
         System.out.println();
 
-        Collections.sort(data, Collections.reverseOrder());
+        fitDisksAndPrint((input) -> input.stream().sorted().collect(Collectors.toList()), data);
         pq.add(new Disk(0));
 
         diskId = 1;
